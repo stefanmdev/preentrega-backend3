@@ -1,26 +1,49 @@
-
 export default class GenericRepository {
-    constructor(dao) {
-        this.dao = dao;
-    }
+  /**
+   * @param {import('mongoose').Model} model
+   */
+  constructor(model) {
+    this.model = model;
+  }
 
-    getAll = (params) =>{
-        return this.dao.get(params);
-    }
+  /**
+   * Devuelve todos los documentos que cumplan el filtro
+   * @param {Object} filter
+   */
+  async getAll(filter = {}) {
+    return this.model.find(filter).lean();
+  }
 
-    getBy = (params) =>{
-        return this.dao.getBy(params);
-    }
+  /**
+   * Devuelve un único documento que cumpla el filtro
+   * @param {Object} filter
+   */
+  async getBy(filter) {
+    return this.model.findOne(filter).lean();
+  }
 
-    create = (doc) =>{
-        return this.dao.save(doc);
-    }
+  /**
+   * Crea un nuevo documento en la colección
+   * @param {Object} doc
+   */
+  async create(doc) {
+    return this.model.create(doc);
+  }
 
-    update = (id,doc) =>{
-        return this.dao.update(id,doc);
-    }
+  /**
+   * Actualiza un documento por su _id y devuelve el documento actualizado
+   * @param {String} id
+   * @param {Object} doc
+   */
+  async update(id, doc) {
+    return this.model.findByIdAndUpdate(id, doc, { new: true }).lean();
+  }
 
-    delete = (id) =>{
-        return this.dao.delete(id);
-    }
+  /**
+   * Elimina un documento por su _id
+   * @param {String} id
+   */
+  async delete(id) {
+    return this.model.findByIdAndDelete(id).lean();
+  }
 }

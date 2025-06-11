@@ -1,0 +1,77 @@
+{
+	"info": {
+		"_postman_id": "0ebf8d8b-bbf1-4d90-b5ae-11c94a648c84",
+		"name": "Mocks API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29495394",
+		"_collection_link": "https://galactic-water-374184.postman.co/workspace/Proyecto3-Backend~dc861b10-1ecb-40dd-adad-1cfeea0aca30/collection/29495394-0ebf8d8b-bbf1-4d90-b5ae-11c94a648c84?action=share&source=collection_link&creator=29495394"
+	},
+	"item": [
+		{
+			"name": "mockingpets",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "generateData",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"users\": 3,\r\n  \"pets\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/mocks/generateData",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"mocks",
+						"generateData"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar usuarios",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Listar mascotas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/pets",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"pets"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
