@@ -2,10 +2,10 @@
   "name": "plantilladocumentacion",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/app.js",
   "type": "module",
   "scripts": {
-    "start": "node app.js",
+    "start": "node src/app.js",
     "dev": "nodemon src/app.js",
     "test": "cross-env NODE_ENV=test mocha test/*.test.js --timeout 30000 --exit",
     "test:watch": "cross-env NODE_ENV=test mocha --watch test/*.test.js --timeout 30000",
