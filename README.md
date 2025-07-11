@@ -1,66 +1,113 @@
-# PreEntrega 1 – Backend III (CoderHouse)
-
-Este repositorio contiene la implementación del módulo de **mocks**
----
-
-## ⚙️ Configuración
-
-1. **Clonar el repositorio** y entrar en la carpeta:
-
-   ```bash
-   git clone <repo-url>
-   cd "PreEntrega1-Backend III"
-   ```
-
-2. **Crear** un archivo `.env` en la raíz con estas variables:
-
-   ```ini
-   MONGO_URL=<tu cadena de conexión MongoDB>
-   PORT=8080
-   ```
-
-3. **Instalar dependencias**:
-
-   ```bash
-   npm install
-   ```
+# 🚀 Backend III - Entrega Final  
+**API para gestión de usuarios, mascotas y adopciones**
 
 ---
 
-## 🚀 Arrancar la aplicación
+## 📌 Características  
+- ✅ Autenticación con JWT  
+- ✅ Documentación Swagger disponible en `/api-docs`  
+- ✅ Dockerización e imagen publicada en DockerHub  
+- ✅ Tests para endpoints de adopciones  
+- ✅ Despliegue en Render
 
+---
+
+## 🔧 Requisitos  
+- Node.js 18+  
+- MongoDB Atlas  
+- Docker (opcional)
+
+---
+
+## 🛠️ Instalación  
+
+### 1. Clonar el repositorio:
 ```bash
-npm start
+git clone https://github.com/tuusuario/preentrega-backend3.git
+cd preentrega-backend3
 ```
 
-El servidor quedará escuchando en `http://localhost:8080`.
+### 2. Instalar dependencias:
+```bash
+npm install
+```
+
+### 3. Configurar archivo `.env`:
+```env
+MONGO_URL=mongodb+srv://usuario:contraseña@cluster0.xxxxx.mongodb.net/nombreDB?retryWrites=true&w=majority
+JWT_SECRET=tu_clave_super_secreta
+PORT=8080
+```
 
 ---
 
-## 📚 Rutas disponibles
+## 🐳 Docker 
 
-### Raíz
+### 1. Construir la imagen:
+```bash
+docker build -t tuusuario/preentrega-backend3 .
+```
 
-`GET /`\
-Devuelve un mensaje de bienvenida.
+### 2. Ejecutar el contenedor:
+```bash
+docker run -p 8080:8080 \
+  -e MONGO_URL="tu_url" \
+  -e JWT_SECRET="tu_clave" \
+  tuusuario/preentrega-backend3
+```
 
-### Mocks (`/api/mocks`)
-
-- **GET** `/api/mocks/mockingpets?count=<n>`\
-  Retorna `<n>` mascotas generadas (por defecto 10).
-
-- **GET** `/api/mocks/mockingusers?count=<n>`\
-  Retorna `<n>` usuarios generados (por defecto 50).
-
-- **POST** `/api/mocks/generateData`\
-  A través de los campos `users` y `pets` en el body JSON, genera e inserta en la BD las cantidades indicadas.
+📦 Imagen disponible en DockerHub:  
+https://hub.docker.com/repository/docker/stefandmdev/backend-coderhouse/general
 
 ---
 
-## 🔧 Colección de Postman
+## 🚀 Endpoints clave
 
-La colección para probar estas rutas está en `.collections/mocks-api.postman_collection.json`.\
-Impórtala en Postman (v2.1) para ejecutar los ejemplos automáticos.
+| Método | Ruta                   | Descripción         |
+|--------|------------------------|---------------------|
+| POST   | `/api/users`           | Registrar usuario   |
+| POST   | `/api/sessions/login`  | Iniciar sesión      |
+| GET    | `/api/pets`            | Listar mascotas     |
+| POST   | `/api/adoptions`       | Crear adopción      |
 
+---
 
+## 🧪 Tests
 
+### Ejecutar tests funcionales:
+```bash
+npm test
+```
+
+**Cobertura:**
+- ✔️ Creación de adopciones  
+- ✔️ Errores de validación  
+- ✔️ Permisos de usuario
+
+---
+
+## 📚 Documentación Swagger
+
+Accedé a la documentación en Swagger UI:
+
+- Local: [http://localhost:8080/api-docs](http://localhost:8080/api-docs)  
+- Producción: [https://preentrega-backend3.onrender.com/api-docs](https://preentrega-backend3.onrender.com/api-docs)
+
+---
+
+## 🌐 Despliegue
+
+URL de la API desplegada en Render:  
+[https://preentrega-backend3.onrender.com](https://preentrega-backend3.onrender.com)
+
+---
+
+## 🤖 Estructura del proyecto
+
+```
+src/  
+├── routes/          # Rutas de usuarios, mascotas y adopciones  
+├── tests/           # Pruebas funcionales  
+├── app.js           # Configuración principal del servidor  
+└── utils/           # Swagger, middlewares, logger, etc.
+```
