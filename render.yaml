@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: plantilladocumentacion
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start  # Asegúrate que coincida con tu archivo principal
+    envVars:
+      - key: PORT
+        value: 8080  # Usa el mismo puerto que en tu código
+      - key: MONGO_URL
+        value: mongodb+srv://stefandiosmayarin:haPVFrTbvbE46etY@cluster-test.mongodb.net/test-db?retryWrites=true&w=majority
+      - key: JWT_SECRET
+        value: miClaveSuperSecreta123
+    autoDeploy: true
+    branch: main  # Cambia a tu rama principal
