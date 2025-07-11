@@ -1,52 +1,50 @@
-// src/routes/mocks.router.js
 import { Router } from 'express';
 import { generateUsersMock, generatePetsMock } from '../utils/mocking.js';
 import UserRepository from '../repository/UserRepository.js';
 import PetRepository  from '../repository/PetRepository.js';
 
-const router   = Router();
+const router = Router();
 const userRepo = new UserRepository();
 const petRepo  = new PetRepository();
 
-// 1) GET /api/mocks/mockingpets
-router.get('/mockingpets', (req, res) => {
-  const count = parseInt(req.query.count) || 10;
-  const pets  = generatePetsMock(count);
-  res.json({ status: 'success', data: pets });
-});
-
-// 2) GET /api/mocks/mockingusers
+// GET opcionales si querés ver los mocks en crudo sin guardar
 router.get('/mockingusers', (req, res) => {
-  const count = parseInt(req.query.count) || 50;
-  const users = generateUsersMock(count);
-  res.json({ status: 'success', data: users });
+  const users = generateUsersMock(5);
+  res.json({ users });
 });
 
-// 3) POST /api/mocks/generateData
-//    Genera y guarda en BD la cantidad de users y pets indicada
-router.post('/generateData', async (req, res, next) => {
+router.get('/mockingpets', (req, res) => {
+  const pets = generatePetsMock(5);
+  res.json({ pets });
+});
+
+// 🆕 POST /api/mocks/generateData
+// Genera e inserta datos en la base de datos
+router.post('/generateData', async (req, res) => {
   try {
-    const { users = 0, pets = 0 } = req.body;
-    const usersArr = generateUsersMock(+users);
-    const petsArr  = generatePetsMock(+pets);
+    const { users = 5, pets = 5 } = req.body;
 
-    // Inserta cada mock usando tu capa de repositorio
+    const usersMock = generateUsersMock(users);
+    const petsMock  = generatePetsMock(pets);
+
     const insertedUsers = await Promise.all(
-      usersArr.map(u => userRepo.create(u))
-    );
-    const insertedPets = await Promise.all(
-      petsArr.map(p => petRepo.create(p))
+      usersMock.map(u => userRepo.create(u))
     );
 
-    res.json({
-      status: 'success',
+    const insertedPets = await Promise.all(
+      petsMock.map(p => petRepo.create(p))
+    );
+
+    res.status(201).json({
+      message: 'Datos mock insertados correctamente',
       inserted: {
         users: insertedUsers.length,
-        pets:  insertedPets.length
+        pets: insertedPets.length
       }
     });
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    console.error('Error generando datos mock:', error);
+    res.status(500).json({ error: 'No se pudieron generar datos mock' });
   }
 });
 

@@ -14,6 +14,10 @@ export default class GenericRepository {
     return this.model.find(filter).lean();
   }
 
+  async get(filter={}) {
+    return this.getAll(filter);
+  }
+
   /**
    * Devuelve un único documento que cumpla el filtro
    * @param {Object} filter

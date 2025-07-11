@@ -1,33 +1,91 @@
-import { adoptionsService, petsService, usersService } from "../services/index.js"
+import mongoose from 'mongoose';
+import { adoptionsService, petsService } from '../services/index.js';
 
-const getAllAdoptions = async(req,res)=>{
-    const result = await adoptionsService.getAll();
-    res.send({status:"success",payload:result})
-}
+export default class AdoptionsController {
+    static async getAllAdoptions(req, res) {
+        try {
+            const adoptions = await adoptionsService.get({});
+            res.status(200).json({
+                status: 'success',
+                payload: adoptions
+            });
+        } catch (error) {
+            res.status(500).json({
+                status: 'error',
+                error: error.message
+            });
+        }
+    }
 
-const getAdoption = async(req,res)=>{
-    const adoptionId = req.params.aid;
-    const adoption = await adoptionsService.getBy({_id:adoptionId})
-    if(!adoption) return res.status(404).send({status:"error",error:"Adoption not found"})
-    res.send({status:"success",payload:adoption})
-}
+    static async getAdoption(req, res) {
+        try {
+            const { id } = req.params;
+            const adoption = await adoptionsService.getBy({ _id: id });
+            
+            if (!adoption) {
+                return res.status(404).json({
+                    status: 'error',
+                    error: 'Adopción no encontrada'
+                });
+            }
 
-const createAdoption = async(req,res)=>{
-    const {uid,pid} = req.params;
-    const user = await usersService.getUserById(uid);
-    if(!user) return res.status(404).send({status:"error", error:"user Not found"});
-    const pet = await petsService.getBy({_id:pid});
-    if(!pet) return res.status(404).send({status:"error",error:"Pet not found"});
-    if(pet.adopted) return res.status(400).send({status:"error",error:"Pet is already adopted"});
-    user.pets.push(pet._id);
-    await usersService.update(user._id,{pets:user.pets})
-    await petsService.update(pet._id,{adopted:true,owner:user._id})
-    await adoptionsService.create({owner:user._id,pet:pet._id})
-    res.send({status:"success",message:"Pet adopted"})
-}
+            res.status(200).json({
+                status: 'success',
+                payload: adoption
+            });
+        } catch (error) {
+            res.status(400).json({
+                status: 'error',
+                error: error.message
+            });
+        }
+    }
 
-export default {
-    createAdoption,
-    getAllAdoptions,
-    getAdoption
+    static async createAdoption(req, res) {
+        try {
+            const { userId, petId } = req.body;
+
+            if (!userId || !petId) {
+                return res.status(400).json({
+                    status: 'error',
+                    error: 'userId and petId are required'
+                });
+            }
+
+            const pet = await petsService.getBy({ _id: petId });
+            if (!pet) {
+                return res.status(404).json({
+                    status: 'error',
+                    error: 'Pet not found'
+                });
+            }
+
+            if (pet.adopted) {
+                return res.status(400).json({
+                    status: 'error',
+                    error: 'Pet already adopted'
+                });
+            }
+
+            const adoption = await adoptionsService.save({
+                owner: userId,
+                pet: petId
+            });
+
+            await petsService.update(petId, { 
+                adopted: true, 
+                owner: userId 
+            });
+
+            res.status(201).json({
+                status: 'success',
+                payload: adoption
+            });
+        } catch (error) {
+            res.status(400).json({
+                status: 'error',
+                error: error.message
+            });
+        }
+    }
 }

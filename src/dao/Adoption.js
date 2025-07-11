@@ -3,11 +3,11 @@ import adoptionModel from "./models/Adoption.js";
 export default class Adoption {
 
     get = (params) =>{
-        return adoptionModel.find(params);
+        return adoptionModel.find(params).populate('owner pet');
     }
 
     getBy = (params) =>{
-        return adoptionModel.findOne(params);
+        return adoptionModel.findOne(params).populate('owner pet');
     }
 
     save = (doc) =>{
