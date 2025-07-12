@@ -11,7 +11,7 @@ const getAllPets = async (req, res) => {
 };
 
 const createPet = async (req, res) => {
-    const { name, specie, birthDate } = req.body; // Cambiado a 'specie' singular
+    const { name, specie, birthDate } = req.body; 
 
     if (!name || !specie) {
         return res.status(400).send({ 

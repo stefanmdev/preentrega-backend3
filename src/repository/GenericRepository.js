@@ -7,7 +7,6 @@ export default class GenericRepository {
   }
 
   /**
-   * Devuelve todos los documentos que cumplan el filtro
    * @param {Object} filter
    */
   async getAll(filter = {}) {
@@ -19,7 +18,6 @@ export default class GenericRepository {
   }
 
   /**
-   * Devuelve un único documento que cumpla el filtro
    * @param {Object} filter
    */
   async getBy(filter) {
@@ -27,7 +25,6 @@ export default class GenericRepository {
   }
 
   /**
-   * Crea un nuevo documento en la colección
    * @param {Object} doc
    */
   async create(doc) {
@@ -35,7 +32,6 @@ export default class GenericRepository {
   }
 
   /**
-   * Actualiza un documento por su _id y devuelve el documento actualizado
    * @param {String} id
    * @param {Object} doc
    */
@@ -44,7 +40,6 @@ export default class GenericRepository {
   }
 
   /**
-   * Elimina un documento por su _id
    * @param {String} id
    */
   async delete(id) {

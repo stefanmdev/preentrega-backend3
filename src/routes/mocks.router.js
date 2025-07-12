@@ -7,7 +7,6 @@ const router = Router();
 const userRepo = new UserRepository();
 const petRepo  = new PetRepository();
 
-// GET opcionales si querés ver los mocks en crudo sin guardar
 router.get('/mockingusers', (req, res) => {
   const users = generateUsersMock(5);
   res.json({ users });
@@ -18,8 +17,6 @@ router.get('/mockingpets', (req, res) => {
   res.json({ pets });
 });
 
-// 🆕 POST /api/mocks/generateData
-// Genera e inserta datos en la base de datos
 router.post('/generateData', async (req, res) => {
   try {
     const { users = 5, pets = 5 } = req.body;

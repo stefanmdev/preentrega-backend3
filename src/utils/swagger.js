@@ -16,7 +16,7 @@ const swaggerOptions = {
       },
     ],
   },
-  apis: ['./src/routes/users.router.js', './src/docs/*.yaml'], // ruta donde están las anotaciones
+  apis: ['./src/routes/users.router.js', './src/docs/*.yaml'], 
 };
 
 const swaggerSpec = swaggerJSDoc(swaggerOptions);

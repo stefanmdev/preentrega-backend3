@@ -5,7 +5,6 @@ export default class AdoptionRepository extends GenericRepository {
     super(model);
   }
 
-  // Sobrescribe el método 'save' para usar 'create' del GenericRepository
   async save(data) {
     return await this.create(data); 
   }

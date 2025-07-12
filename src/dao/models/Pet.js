@@ -8,13 +8,13 @@ const schema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    specie: {  // Cambiado de 'specie' a 'species'
+    specie: {  
         type: String,
         required: true,
         trim: true,
-        enum: ['Perro', 'Gato', 'Conejo', 'Ave', 'Otro'] // Opcional: limita valores
+        enum: ['Perro', 'Gato', 'Conejo', 'Ave', 'Otro'] 
     },
-    birthday: {  // Cambiado de 'birthDate' a 'birthday'
+    birthday: {  
         type: Date,
         validate: {
             validator: (date) => date <= new Date(),
@@ -33,7 +33,7 @@ const schema = new mongoose.Schema({
         type: String,
         default: ''
     }
-}, { timestamps: true }); // Añade createdAt y updatedAt
+}, { timestamps: true }); 
 
 const petModel = mongoose.model(collection, schema);
 
